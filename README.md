@@ -1,7 +1,7 @@
 # Tasky
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/0915ebde19ba4fa988f75292ec3c25ca)](https://www.codacy.com/gh/wjfatuan/tasky-backend-2022-2/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wjfatuan/tasky-backend-2022-2&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/9a79748fff724d02ba69da88b2af47a1)](https://www.codacy.com/gh/wjfatuan/tasky-backend-2022-2/dashboard?utm_source=github.com&utm_medium=referral&utm_content=wjfatuan/tasky-backend-2022-2&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/0915ebde19ba4fa988f75292ec3c25ca)](https://www.codacy.com/gh/wjfatuan/tasky-backend-2022-2/dashboard?utm_source=github.com&utm_medium=referral&utm_content=wjfatuan/tasky-backend-2022-2&utm_campaign=Badge_Coverage)
 
 Backend (API REST) del proyecto Tasky del curso de Construcción de software.
 Esta aplicación está construida con Spring Boot y pernmita la interacción con

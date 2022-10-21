@@ -1,0 +1,60 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.4'
+	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+	id 'java'
+	id 'jacoco'
+	id 'checkstyle'
+}
+
+group = 'co.edu.uan.software'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named("jar") {
+	enabled = false
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+test {
+	finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+		xml.destination = file("${rootProject.projectDir}/build/jacocoTestReport.xml")
+    }
+	afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                "co/edu/uan/**/TaskyApplication.class",
+                "**/config/*"
+            ])
+        }))
+    }
+}
+
+checkstyle {
+	// assign the latest checkstyle version explicitly
+	// default version is very old (5.9)
+	toolVersion = '10.3.4'
+	// checkstyle.xml copy from:
+	// https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-8.6/src/main/resources/google_checks.xml
+	// the version should be as same as plugin version
+	configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+}

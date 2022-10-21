@@ -1,0 +1,644 @@
+openapi: 3.0.3
+info:
+  title: Tasky - OpenAPI 3.0
+  version: 1.0.0
+  description: |-
+    Este es el API de la aplicación Tasky. 
+    Algunos links útiles:
+    - [The Tasky backend repository](https://github.com/wjfatuan/tasky-backend)
+    - [The Tasky frontend repository](https://github.com/wjfatuan/tasky-frontend)
+servers:
+  - url: https://localhost:8000/api/v1
+tags:
+  - name: tarea
+    description: Acerca de sus tareas
+  - name: lista
+    description: Acerca de sus listas de tareas
+  - name: etiqueta
+    description: Acerca de sus etiquetas
+  - name: usuario
+    description: Operaciones sobre el usuario
+paths:
+  /tareas:
+    post:
+      tags:
+        - tarea
+      summary: Agregar una nueva tarea
+      description: Add a new pet to the store
+      operationId: agregarTarea
+      requestBody:
+        description: Crear una nueva tarea
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TareaNew'
+        required: true
+      responses:
+        '201':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'          
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - tarea
+      summary: Retorna todas las tareas del usuario
+      responses:
+        '200':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarea'
+  /tareas/buscarPorEstado:
+    get:
+      tags:
+        - tarea
+      summary: Buscar tareas por estado
+      description: Se puedne proporcionar varios estados separados por coma
+      operationId: buscarTareaPorEstado
+      parameters:
+        - name: estado
+          in: query
+          description: Estados usados para fltrar
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: pendiente
+            enum:
+              - pendiente
+              - en-progreso
+              - completada
+      responses:
+        '200':
+          description: exitoso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarea'          
+        '400':
+          description: Valor de estado invalido
+  /tareas/buscarPorEtiqueta:
+    get:
+      tags:
+        - tarea
+      summary: Buscar tareas por etiqueta
+      description: Se pueden pasar varias etquetas separadas por coma.
+      operationId: buscarTareasPorEtiqueta
+      parameters:
+        - name: etiquetas
+          in: query
+          description: Etiquetas usadas para filtrar
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: exitoso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarea'          
+        '400':
+          description: Valor inválido de etiqueta
+  /tareas/{id-tarea}:
+    parameters:
+    - name: id-tarea
+      in: path
+      description: ID de la tarea
+      required: true
+      schema:
+        type: integer
+        format: int64
+    get:
+      tags:
+        - tarea
+      summary: Buscar una tarea por ID
+      description: Retorna una sola tarea
+      responses:
+        '200':
+          description: exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'          
+        '400':
+          description: ID invalido
+        '404':
+          description: No se encuentra la tarea
+    patch:
+      tags:
+        - tarea
+      summary: Actualiza una tarea existente
+      description: ''
+      parameters:
+        - name: nombre
+          in: query
+          description: Nombre de la tarea
+          schema:
+            type: string
+        - name: estado
+          in: query
+          description: Estado de la tarea
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'          
+        '400':
+          description: Parametros inválidos
+        '404':
+          description: Tarea no encontrada
+        '405':
+          description: Excepción de valdación
+
+    delete:
+      tags:
+        - tarea
+      summary: Borra una tarea
+      description: borra una tarea
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '404':
+          description: Tarea invalida o no encontrada
+  /listas:
+    post:
+      tags:
+        - lista
+      summary: Agregar una nueva lista
+      requestBody:
+        description: Crear una nueva lista
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListaNew'
+        required: true
+      responses:
+        '201':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lista'          
+        '400':
+          description: Parámetros invalidos
+  /listas/{id-lista}:
+    parameters:
+    - name: id-lista
+      in: path
+      description: ID de la lista
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+        - lista
+      summary: Buscar una lista por ID
+      description: Retorna una sola lista
+      responses:
+        '200':
+          description: exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lista'          
+        '400':
+          description: ID invalido
+        '404':
+          description: No se encuentra la lista
+    patch:
+      tags:
+        - lista
+      summary: Actualiza una lista existente
+      description: ''
+      parameters:
+        - name: nombre
+          in: query
+          description: Nombre de la tarea
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lista'          
+        '400':
+          description: Parametros inválidos
+        '404':
+          description: Lista no encontrada
+        '405':
+          description: Excepción de validación
+
+    delete:
+      tags:
+        - lista
+      summary: Borra una lista (no las tareas)
+      description: Borra una lista. Las tareas que hacen parte de la lista se conservan, pero estas dejan de pertenecer a la lista.
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '404':
+          description: Lista invalida o no encontrada
+  /listas/{id-lista}/tareas:
+    parameters:
+      - name: id-lista
+        in: path
+        description: ID de la lista
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - lista
+      summary: Retorna todas las tareas del usuario dentro de la lista indicada
+      responses:
+        '200':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarea'
+  /etiquetas:
+    post:
+      tags:
+        - etiqueta
+      summary: Agregar una nueva etiqueta
+      requestBody:
+        description: Crear una nueva etiqueta
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EtiquetaNew'
+        required: true
+      responses:
+        '201':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etiqueta'          
+        '400':
+          description: Parámetros invalidos
+  /etiquetas/{id-etiqueta}:
+    parameters:
+    - name: id-etiqueta
+      in: path
+      description: ID de la etiqueta
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: api_key
+      in: header
+      description: ''
+      required: false
+      schema:
+        type: string
+    get:
+      tags:
+        - etiqueta
+      summary: Buscar una etiqueta por ID
+      description: Retorna una sola etiqueta
+      responses:
+        '200':
+          description: exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etiqueta'          
+        '400':
+          description: ID invalido
+        '404':
+          description: No se encuentra la etiqueta
+    patch:
+      tags:
+        - etiqueta
+      summary: Actualiza una etiqueta existente
+      description: ''
+      parameters:
+        - name: nombre
+          in: query
+          description: Nombre de la etiqueta
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etiqueta'          
+        '400':
+          description: Parametros inválidos
+        '404':
+          description: Etiqueta no encontrada
+        '405':
+          description: Excepción de validación
+
+    delete:
+      tags:
+        - etiqueta
+      summary: Borra una etiqueta (no las tareas)
+      description: Borra una etiqueta. Las tareas que hacen parte de la etiqueta se conservan, pero estas dejan de pertenecer a la etiqueta.
+      responses:
+        '404':
+          description: etiqueta invalida o no encontrada
+  /etiquetas/{id-etiqueta}/tareas:
+    parameters:
+      - name: id-etiqueta
+        in: path
+        description: ID de la etiqueta
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - etiqueta
+      summary: Retorna todas las tareas del usuario dentro de la etiqueta indicada
+      responses:
+        '200':
+          description: Exitoso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarea'
+  /usuarios:
+    post:
+      tags:
+        - usuario
+      summary: Crear un nuevo usuario
+      requestBody:
+        description: Objeto usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioNew'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+  /usuarios/autenticar:
+    post:
+      tags:
+        - usuario
+      summary: Autentica un usuario en el sistema
+      description: ''
+      requestBody:
+        $ref: '#/components/requestBodies/Autenticar'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: usuario/contraseña incorrectos
+  /usuarios/logout:
+    get:
+      tags:
+        - usuario
+      summary: Logs out current logged in user session
+      description: ''
+      operationId: logoutUser
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+  /usuarios/{username}:
+    get:
+      tags:
+        - usuario
+      summary: Obtener un usuario por nombre de usuario
+      description: ''
+      parameters:
+        - name: username
+          in: path
+          description: 'El nombre de usuario a buscar. El password se retorna vacío'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'          
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+    patch:
+      tags:
+        - usuario
+      summary: Update user
+      description: Actualiza los datos del usuario. Solo el mismo usuario puede hacerlo.
+      parameters:
+        - name: username
+          in: path
+          description: name that need to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Actualizar un usuario existente en la aplicación
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+      responses:
+        default:
+          description: successful operation
+    delete:
+      tags:
+        - usuario
+      summary: Borrar usuario
+      description: Solo lo puede hacer el mismo usuario
+      parameters:
+        - name: username
+          in: path
+          description: El usuario a borrar
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Nombre invalido
+        '404':
+          description: Usuario no encontrado
+components:
+  schemas:
+    ListaNew:
+      type: object
+      properties:
+        name:
+          type: string
+          example: School
+    Lista:
+      allOf:
+        - $ref: '#/components/schemas/ListaNew'
+        - type: object
+          properties:
+            uid:
+              type: string
+              format: uuid
+              example: f81d4fae-7dec-11d0-a765-00a0c91e6bf5
+    UsuarioNew:
+      type: object
+      properties:
+        nombre-usuario:
+          type: string
+          example: theUser
+        nombres:
+          type: string
+          example: John
+        apellidos:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          format: password
+          example: '12345'
+    Usuario:
+      allOf:
+        - $ref: '#/components/schemas/Usuario'
+        - type: object
+          properties:
+            uid:
+              type: string
+              format: uuid
+              example: f81d4fae-7dec-11d0-a765-00a0c91e6bf5
+    EtiquetaNew:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'mi-etiqueta'
+    Etiqueta:
+      allOf:
+        - $ref: '#/components/schemas/Etiqueta'
+        - type: object
+          properties:
+            uid:
+              type: string
+              format: uuid
+              example: f81d4fae-7dec-11d0-a765-00a0c91e6bf5
+    TareaNew:
+      required:
+        - nombre
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: Hacer las compras semanales
+      xml:
+        name: tarea
+    Tarea:
+      allOf:
+        - $ref: '#/components/schemas/Tarea'
+        - type: object
+          properties:
+            uid:
+              type: string
+              format: uuid
+              example: f81d4fae-7dec-11d0-a765-00a0c91e6bf5
+            fechaCreacion:
+              type: string
+              format: date-time
+            fechaCierre:
+              type: string
+              format: date-time
+            usuario:
+              type: string
+              format: uuid
+            etiquetas:
+              type: array
+              xml:
+                wrapped: true
+              items:
+                $ref: '#/components/schemas/Etiqueta'
+            estado:
+              type: string
+              description: estado de la tarea
+              enum:
+                - pendiente
+                - en-progreso
+                - completada
+      xml:
+        name: tarea
+  requestBodies:
+    Autenticar:
+      description: Datos de autenticacion
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              nombre-usuario:
+                type: string
+                example: theUser
+              password:
+                type: string
+                format: password
+                example: '12345'
+
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

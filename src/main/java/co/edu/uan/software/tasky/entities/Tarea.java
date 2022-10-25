@@ -77,5 +77,20 @@ public class Tarea {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public Tarea() {
+    }
+
+    public Tarea(UUID uid, String nombreTarea, Date fechaCreacion, Date fechaCierre, String usuario, String etiquetas,
+            String estado) {
+        this.uid = uid;
+        this.nombreTarea = nombreTarea;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaCierre = fechaCierre;
+        this.usuario = usuario;
+        this.etiquetas = etiquetas;
+        this.estado = estado;
+    }
+    
     
 }

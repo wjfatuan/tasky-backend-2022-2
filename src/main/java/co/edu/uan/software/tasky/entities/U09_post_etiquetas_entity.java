@@ -15,6 +15,14 @@ public class U09_post_etiquetas_entity {
     private String nombreEtiqueta;
     private String color;
 
+    public U09_post_etiquetas_entity(){
+    }
+
+    public U09_post_etiquetas_entity(String n, String c){
+        this.nombreEtiqueta = n;
+        this.color = c;
+    }
+
     @Override
     public String toString() {
         return "{" +

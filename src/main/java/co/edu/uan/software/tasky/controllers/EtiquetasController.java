@@ -3,6 +3,7 @@ package co.edu.uan.software.tasky.controllers;
 import java.util.ArrayList;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.uan.software.tasky.entities.EtiquetasEntity;
@@ -36,19 +37,18 @@ public class EtiquetasController {
             /etiqueta/Hogar&Verde/
             /etiqueta/Laboral&/  *Aqui se autocompleta el color aleatoriamente
     */
-    @PostMapping("/etiqueta/{nombre}&{color}")
-    public EtiquetasEntity createEtiquetaPro(@PathVariable String nombre, @PathVariable String color) {        
-        
+    @PostMapping("/etiqueta")
+    public EtiquetasEntity createEtiqueta(@RequestBody EtiquetasEntity e) {        
         // Si el usuario deja en blanco el espacio de "color" este sera autocompletado aleatoriamente
-        if (color.equals("")){
-            EtiquetasEntity e = new EtiquetasEntity(nombre, colorRandomSelector((int)(Math.random()*4)));
-            repository.save(e);
-            return e;
+        if (e.getColor().equals("")){
+            EtiquetasEntity a = new EtiquetasEntity(e.getNombreEtiqueta(), colorRandomSelector((int)(Math.random()*4)));
+            repository.save(a);
+            return a;
         }
         else{
-            EtiquetasEntity e = new EtiquetasEntity(nombre, color);
-            repository.save(e);
-            return e;
-        }   
+            EtiquetasEntity a = new EtiquetasEntity(e.getNombreEtiqueta(), e.getColor());
+            repository.save(a);
+            return a;
+        }
     }
 }

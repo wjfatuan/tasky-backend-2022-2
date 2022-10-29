@@ -10,7 +10,13 @@ import co.edu.uan.software.tasky.repositories.EtiquetasRepository;
 
 @RestController
 public class EtiquetasController {
+    // Repositorio y su constructor
+    private final EtiquetasRepository repository;
 
+    public EtiquetasController(EtiquetasRepository r){
+        this.repository = r;
+    }
+    
     // ArrayList con la lista de colores a seleccionar cuando el usuario no elige ninguna
     public String colorRandomSelector(int h) {
         ArrayList<String> colores = new ArrayList<String>();
@@ -21,13 +27,6 @@ public class EtiquetasController {
         colores.add("Morado");
 
         return colores.get(h);
-    }
-
-    // Repositorio y su constructor
-    private final EtiquetasRepository repository;
-
-    public EtiquetasController(EtiquetasRepository r){
-        this.repository = r;
     }
     
     /*

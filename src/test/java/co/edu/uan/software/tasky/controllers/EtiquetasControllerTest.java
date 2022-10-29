@@ -14,23 +14,23 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
-import co.edu.uan.software.tasky.entities.U09_post_etiquetas_entity;
-import co.edu.uan.software.tasky.repositories.U09_post_etiquetas_repository;
+import co.edu.uan.software.tasky.entities.EtiquetasEntity;
+import co.edu.uan.software.tasky.repositories.EtiquetasRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class U09_test_post_etiquetas_controller {
+public class EtiquetasControllerTest {
     @LocalServerPort
     private int port;
 
     @Autowired
     private TestRestTemplate restTemplate;
     @Autowired
-    private U09_post_etiquetas_repository repo;
+    private EtiquetasRepository repo;
 
     private String endpoint = "";
 
-    private U09_post_etiquetas_entity u1 = new U09_post_etiquetas_entity("Comida", "Rojo");
-    private U09_post_etiquetas_entity u2 = new U09_post_etiquetas_entity("Hogar", "Verde");
+    private EtiquetasEntity u1 = new EtiquetasEntity("Comida", "Rojo");
+    private EtiquetasEntity u2 = new EtiquetasEntity("Hogar", "Verde");
 
     @BeforeEach
     public void init() {
@@ -42,11 +42,11 @@ public class U09_test_post_etiquetas_controller {
     @Test
     public void createEtiqueta() throws Exception {
         String url = endpoint;
-        U09_post_etiquetas_entity data = new U09_post_etiquetas_entity("Hogar", "Verde");
-        HttpEntity<U09_post_etiquetas_entity> request = new HttpEntity<>(data);
-        ResponseEntity<U09_post_etiquetas_entity> response = restTemplate.exchange(url, HttpMethod.POST, request, U09_post_etiquetas_entity.class);
+        EtiquetasEntity data = new EtiquetasEntity("Hogar", "Verde");
+        HttpEntity<EtiquetasEntity> request = new HttpEntity<>(data);
+        ResponseEntity<EtiquetasEntity> response = restTemplate.exchange(url, HttpMethod.POST, request, EtiquetasEntity.class);
         assertEquals(200, response.getStatusCodeValue());
-        U09_post_etiquetas_entity body = request.getBody();
+        EtiquetasEntity body = request.getBody();
         assertNotNull(body);
         assertEquals(data.getNombreEtiqueta(), body.getNombreEtiqueta());
         assertEquals(data.getColor(), body.getColor());

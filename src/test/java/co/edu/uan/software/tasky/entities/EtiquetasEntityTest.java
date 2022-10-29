@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import co.edu.uan.software.tasky.repositories.U09_post_etiquetas_repository;
+import co.edu.uan.software.tasky.repositories.EtiquetasRepository;
 
 @SpringBootTest()
-public class U09_test_post_etiquetas_entity {
+public class EtiquetasEntityTest {
 
     @Autowired
-    private U09_post_etiquetas_repository repo;
+    private EtiquetasRepository repo;
 
     //Creacion de test con los valores de nombreEtiqueta = Comida y color = Rojo
     @Test
     public void unsavedToString() {
-        U09_post_etiquetas_entity de = new U09_post_etiquetas_entity("Comida", "Rojo");
+        EtiquetasEntity de = new EtiquetasEntity("Comida", "Rojo");
         String expected ="{" +
         " uid='" + de.getUid() + "'" +
         ", nombreEtiqueta='" + "Comida" + "'" +
@@ -28,7 +28,7 @@ public class U09_test_post_etiquetas_entity {
 
     @Test
     public void savedToString() {
-        U09_post_etiquetas_entity de = new U09_post_etiquetas_entity("Comida", "Rojo");
+        EtiquetasEntity de = new EtiquetasEntity("Comida", "Rojo");
         repo.save(de);
         String expected ="{" +
         " uid='" + de.getUid() + "'" +

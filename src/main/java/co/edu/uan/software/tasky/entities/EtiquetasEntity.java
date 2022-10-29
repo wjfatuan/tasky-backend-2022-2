@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity(name = "etiqueta")
-public class U09_post_etiquetas_entity {
+public class EtiquetasEntity {
 
     @Id
     @GeneratedValue
@@ -15,10 +15,10 @@ public class U09_post_etiquetas_entity {
     private String nombreEtiqueta;
     private String color;
 
-    public U09_post_etiquetas_entity(){
+    public EtiquetasEntity(){
     }
 
-    public U09_post_etiquetas_entity(String n, String c){
+    public EtiquetasEntity(String n, String c){
         this.nombreEtiqueta = n;
         this.color = c;
     }

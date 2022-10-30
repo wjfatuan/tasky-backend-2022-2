@@ -1,79 +1,119 @@
 package co.edu.uan.software.tasky.entities;
 
-    import java.sql.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.Id;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 
 /*
 
 */
 
-@Entity
+@Entity (name = "tarea")
 public class Tarea {
     @Id
+    @GeneratedValue
+    @Column(columnDefinition = "UUID")
     private UUID uid;
     private String nombreTarea;
-    private Date fechaCreacion;
-    private Date fechaCierre;
+    private LocalDate fechaCreacion;
+    private LocalDate fechaCierre;
     private String usuario;
     private String etiquetas;
     private String estado;
 
+    /**
+     * @return UUID return the uid
+     */
     public UUID getUid() {
         return this.uid;
     }
-
+    /**
+     * @param uid the uid to set
+     */
     public void setUid(UUID uid) {
         this.uid = uid;
     }
-
+    /**
+     * @return String return the nombreTarea
+     */
     public String getNombreTarea() {
         return this.nombreTarea;
     }
-
+    /**
+     * @param nombreTarea the nombreTarea to set
+     */
     public void setNombreTarea(String nombreTarea) {
         this.nombreTarea = nombreTarea;
     }
-
-    public Date getFechaCreacion() {
+    /**
+     * @return Date return the fechaCreacion
+     */
+    public LocalDate getFechaCreacion() {
         return this.fechaCreacion;
     }
-
-    public void setFechaCreacion(Date fechaCreacion) {
+    /**
+     * @param fechaCreacion the fechaCreacion to set
+     */
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-
-    public Date getFechaCierre() {
+    /**
+     * @return Date return the fechaCierre
+     */
+    public LocalDate getFechaCierre() {
         return this.fechaCierre;
     }
 
-    public void setFechaCierre(Date fechaCierre) {
+    /**
+     * @param fechaCierre the fechaCierre to set
+     */
+    public void setFechaCierre(LocalDate fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
 
+    /**
+     * @return Strig return the usuario
+     */
     public String getUsuario() {
         return this.usuario;
     }
 
+    /**
+     * @param usuario the usuario to set
+     */
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
+    /**
+     * @return String return the etiquetas
+    */
     public String getEtiquetas() {
         return this.etiquetas;
     }
 
+    /**
+     * @param etiquetas  the etiquetas to set
+     */
     public void setEtiquetas(String etiquetas) {
         this.etiquetas = etiquetas;
     }
 
+    /**
+     * @return String return estado
+     */
     public String getEstado() {
         return this.estado;
     }
 
+    /** 
+     * @param estado the estado to set
+    */
     public void setEstado(String estado) {
         this.estado = estado;
     }
@@ -81,7 +121,7 @@ public class Tarea {
     public Tarea() {
     }
 
-    public Tarea(UUID uid, String nombreTarea, Date fechaCreacion, Date fechaCierre, String usuario, String etiquetas,
+    public Tarea(UUID uid, String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, String usuario, String etiquetas,
             String estado) {
         this.uid = uid;
         this.nombreTarea = nombreTarea;
@@ -90,6 +130,24 @@ public class Tarea {
         this.usuario = usuario;
         this.etiquetas = etiquetas;
         this.estado = estado;
+    }
+    public Tarea(String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, String usuario, String etiquetas) {
+        this.nombreTarea = nombreTarea;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaCierre = fechaCierre;
+        this.usuario = usuario;
+        this.etiquetas = etiquetas;
+    }
+    public Tarea(String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, String usuario) {
+        this.nombreTarea = nombreTarea;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaCierre = fechaCierre;
+        this.usuario = usuario;
+    }
+    @Override
+    public String toString() {
+        return "Tarea [nombreTarea=" + nombreTarea + ", fechaCreacion=" + fechaCreacion + ", fechaCierre=" + fechaCierre
+                + ", usuario=" + usuario + "]";
     }
     
     

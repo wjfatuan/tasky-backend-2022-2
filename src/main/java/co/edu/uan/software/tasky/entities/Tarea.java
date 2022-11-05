@@ -22,7 +22,7 @@ public class Tarea {
     private String nombreTarea;
     private LocalDate fechaCreacion;
     private LocalDate fechaCierre;
-    private String usuario;
+    private Usuario usuario;
     private String etiquetas;
     private String estado;
 
@@ -79,14 +79,14 @@ public class Tarea {
     /**
      * @return Strig return the usuario
      */
-    public String getUsuario() {
+    public Usuario getUsuario() {
         return this.usuario;
     }
 
     /**
      * @param usuario the usuario to set
      */
-    public void setUsuario(String usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -121,7 +121,7 @@ public class Tarea {
     public Tarea() {
     }
 
-    public Tarea(UUID uid, String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, String usuario, String etiquetas,
+    public Tarea(UUID uid, String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, Usuario usuario, String etiquetas,
             String estado) {
         this.uid = uid;
         this.nombreTarea = nombreTarea;
@@ -131,14 +131,14 @@ public class Tarea {
         this.etiquetas = etiquetas;
         this.estado = estado;
     }
-    public Tarea(String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, String usuario, String etiquetas) {
+    public Tarea(String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, Usuario usuario, String etiquetas) {
         this.nombreTarea = nombreTarea;
         this.fechaCreacion = fechaCreacion;
         this.fechaCierre = fechaCierre;
         this.usuario = usuario;
         this.etiquetas = etiquetas;
     }
-    public Tarea(String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, String usuario) {
+    public Tarea(String nombreTarea, LocalDate fechaCreacion, LocalDate fechaCierre, Usuario usuario) {
         this.nombreTarea = nombreTarea;
         this.fechaCreacion = fechaCreacion;
         this.fechaCierre = fechaCierre;

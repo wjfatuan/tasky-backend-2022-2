@@ -1,4 +1,4 @@
-package co.edu.uan.software.tasky.entities;
+/*package co.edu.uan.software.tasky.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,3 +30,4 @@ public class TareaTest {
         assertEquals(expected, de.toString());
     }
 }
+ */
